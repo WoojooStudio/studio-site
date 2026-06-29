@@ -466,8 +466,31 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 ══════════════════════════════════ */
 .works-section { background: var(--bg); }
 
+/* 데스크톱: GSAP이 핀+가로스크롤 처리 */
 .works-hscroll { overflow: hidden; padding: 0 20px 0 100px; }
 .works-track { display: flex; gap: 5px; will-change: transform; }
+
+/* 모바일: CSS 네이티브 스냅 스크롤 */
+@media (max-width: 768px) {
+  .works-hscroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 0 20px;
+    height: auto;
+  }
+  .works-track {
+    transform: none !important;
+    will-change: auto;
+    width: max-content;
+  }
+  .work-card {
+    width: 82vw;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+}
 
 .work-card {
   flex-shrink: 0; width: min(986px, 65vw);
@@ -535,10 +558,9 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   position: sticky;
   border: 1px solid var(--blue);
   border-radius: 32px;
-  overflow: hidden;
+  overflow: clip;
   transform-origin: top center;
   will-change: transform;
-  /* 각 카드가 겹치도록 margin-top 음수 */
   margin-top: -24px;
   z-index: 1;
 }
@@ -722,13 +744,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   /* ── Nav ── */
   .nav {
     height: 70px;
-    background: rgba(254,254,254,.15);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(254,254,254,.22);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
+    border-bottom: 1px solid rgba(254,254,254,.15);
   }
-  .nav__center { gap: 20px; }
-  .nav__link { font-size: 14px; }
-  .nav__cta { display: none; }
+  .nav__link { color: rgba(254,254,254,.95); }
 
   /* ── Hero ── */
   .hero {
@@ -767,38 +788,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .hero__pill { display: none; }
   .hero__scroll { display: none; }
 
-  /* ── Works 가로 스크롤 ── */
-  /* works-section은 overflow 건드리지 않음 */
-  .works-hscroll {
-    overflow-x: auto !important;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding: 0 20px;
-    /* GSAP pin이 만드는 height 초기화 */
-    height: auto !important;
-  }
-  .works-track {
-    display: flex;
-    /* GSAP x transform 완전 무력화 */
-    transform: none !important;
-    will-change: auto;
-  }
-  .work-card {
-    width: 82vw;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-  }
+  /* ── Works 가로스크롤은 base @media에서 처리 ── */
 
-  /* ── Services 카드 스택 해제 ── */
-  .service-card {
-    position: relative !important;
-    top: auto !important;
-    margin-top: 12px;
-    /* GSAP scale 초기화 */
-    transform: none !important;
-  }
-  .service-card:first-child { margin-top: 0; }
+  /* ── Services 카드: GSAP scale만 제거, sticky 유지 ── */
+  .service-card { transform: none !important; }
 
   /* ── Contact ── */
   .contact-links { flex-direction: column; }
