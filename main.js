@@ -79,14 +79,13 @@
      PRELOADER — multi-font word cycle
   ══════════════════════════════════ */
   const PRELOADER_WORDS = [
-    { text: 'Woojoo',    font: "'Bebas Neue', sans-serif",            style: 'normal',  weight: 400 },
-    { text: '우주',       font: "'DM Sans', sans-serif",               style: 'normal',  weight: 700 },
-    { text: 'Universe',  font: "'Cormorant Garamond', serif",          style: 'italic',  weight: 300 },
-    { text: 'Studio',    font: "'Space Grotesk', sans-serif",          style: 'normal',  weight: 700 },
-    { text: 'Design',    font: "'Playfair Display', serif",            style: 'italic',  weight: 400 },
-    { text: 'Unique',    font: "'Cormorant Garamond', serif",          style: 'italic',  weight: 600 },
-    { text: 'Berlin',    font: "'Space Grotesk', sans-serif",          style: 'normal',  weight: 300 },
-    { text: 'Woojoo.',   font: "'Bebas Neue', sans-serif",             style: 'normal',  weight: 400 },
+    { text: 'Woojoo',  font: "'Oswald', sans-serif",                  style: 'normal', weight: 400 },
+    { text: 'Woojoo',  font: "'BhuTuka Expanded One', cursive",       style: 'normal', weight: 400 },
+    { text: 'Woojoo',  font: "'Optima', serif",                       style: 'normal', weight: 400 },
+    { text: 'Woojoo',  font: "'Rock 3D', cursive",                    style: 'normal', weight: 400 },
+    { text: '우주',     font: "'Black Han Sans', sans-serif",           style: 'normal', weight: 400 },
+    { text: 'Woojoo',  font: "'Sunshiney', cursive",                  style: 'normal', weight: 400 },
+    { text: 'Woojoo',  font: "'Space Mono', monospace",               style: 'normal', weight: 400 },
   ];
 
   const preloader    = document.getElementById('preloader');
@@ -131,9 +130,9 @@
     onComplete() {
       clearInterval(wordInterval);
       gsap.to(preloader, {
-        yPercent: -100,
-        duration: 0.9,
-        ease: 'power3.inOut',
+        opacity: 0,
+        duration: 0.4,
+        ease: 'power2.inOut',
         onComplete() {
           preloader.style.display = 'none';
           initSite();
@@ -215,7 +214,7 @@
       /* Stars */
       stars.forEach((s) => {
         s.twinkle += s.speed * 60;
-        const twinkleA = s.a * (0.5 + 0.5 * Math.sin(s.twinkle));
+        const twinkleA = s.a * 0.1 * (0.5 + 0.5 * Math.sin(s.twinkle));
         const x = s.x * W;
         const y = ((s.y + t * s.speed) % 1) * H;
         ctx.beginPath();
@@ -274,31 +273,21 @@
   function initHero() {
     const wordLeft  = document.querySelector('#hero-work .hero__word');
     const wordRight = document.querySelector('#hero-bond .hero__word');
-    const subLines  = document.querySelectorAll('.hero__sub-line');
-    const scroll    = document.getElementById('hero-scroll');
-    const pill      = document.getElementById('hero-pill');
 
     if (!wordLeft || !wordRight) return;
 
     gsap.set(wordLeft,  { x: '-110vw' });
     gsap.set(wordRight, { x:  '110vw' });
     gsap.set('#hero-services', { y: 16, opacity: 0 });
-    gsap.set([scroll, pill], { y: 16, opacity: 0 });
 
     const tl = gsap.timeline({ delay: 0.1 });
 
     tl.to([wordLeft, wordRight], {
       x: 0, duration: 1.15, ease: 'power4.out',
     })
-    .to(subLines, {
-      opacity: 1, y: 0, duration: 0.65, stagger: 0.14, ease: 'power3.out',
-    }, '-=0.4')
     .to('#hero-services', {
       opacity: 1, y: 0, duration: 0.6, ease: 'power3.out',
-    }, '-=0.2')
-    .to([scroll, pill], {
-      opacity: 1, y: 0, duration: 0.55, stagger: 0.1, ease: 'power2.out',
-    }, '-=0.4');
+    }, '-=0.2');
 
     /* Title floats up on scroll */
     gsap.to('.hero__title-wrap', {

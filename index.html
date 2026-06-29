@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Woojoo.Studio — Design & Brand Identity</title>
 
-  <!-- Bebas Neue · DM Sans · Playfair Display · Cormorant Garamond · Space Grotesk -->
+  <!-- Oswald · BhuTuka · Optima · Rock 3D · Black Han Sans · Space Mono · Sunshiney · Orelega One -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;700&family=BhuTuka+Expanded+One&family=Rock+3D&family=Black+Han+Sans&family=Space+Mono:wght@400;700&family=Sunshiney&family=Orelega+One&display=swap" rel="stylesheet" />
 
   <!-- GSAP + ScrollTrigger + Lenis -->
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -37,38 +37,44 @@
   <!-- ─── NAVIGATION ─── -->
   <nav class="nav" id="nav">
     <div class="nav__center">
-      <a href="#works"   class="nav__link" data-cursor="link">Works</a>
-      <a href="#studio"  class="nav__link" data-cursor="link">Studio</a>
+      <div class="nav__dropdown">
+        <a href="#studio" class="nav__link" data-cursor="link">About</a>
+        <div class="nav__submenu">
+          <a href="#studio"                        class="nav__sub-link" data-cursor="link">Woojoo.Studio</a>
+          <a href="https://nakang.com"             class="nav__sub-link" data-cursor="link" target="_blank" rel="noopener">Nakang</a>
+          <a href="https://soap-soop.com"          class="nav__sub-link" data-cursor="link" target="_blank" rel="noopener">Soap Soop</a>
+        </div>
+      </div>
+      <div class="nav__dropdown">
+        <a href="#works" class="nav__link" data-cursor="link">Works</a>
+        <div class="nav__submenu">
+          <a href="services/inhouse/index.html"   class="nav__sub-link" data-cursor="link">Inhouse</a>
+          <a href="services/brand/index.html"     class="nav__sub-link" data-cursor="link">Brand</a>
+          <a href="services/community/index.html" class="nav__sub-link" data-cursor="link">Community</a>
+        </div>
+      </div>
       <a href="#contact" class="nav__link" data-cursor="link">Contact</a>
-      <a href="#"        class="nav__link" data-cursor="link">Follow</a>
     </div>
-    <a href="#contact" class="nav__cta" data-cursor="link">Start a project</a>
   </nav>
 
   <!-- ─── HERO ─── -->
   <section class="hero" id="hero">
 
-    <!-- Cosmic gradient canvas (replaces image) -->
+    <!-- Starfield canvas -->
     <canvas class="hero__canvas" id="hero-canvas"></canvas>
     <div class="hero__gradient-overlay"></div>
 
-    <!-- WOOJOO. / STUDIO — 2 rows, slide from sides -->
-    <div class="hero__title-wrap" aria-label="Woojoo.Studio">
+    <!-- Hero tagline — slides from sides into center -->
+    <div class="hero__title-wrap" aria-label="We are all unique in the universe">
       <div class="hero__row hero__row--left" id="hero-work">
-        <span class="hero__word">WOOJOO.</span>
+        <span class="hero__word">We are all unique</span>
       </div>
       <div class="hero__row hero__row--right" id="hero-bond">
-        <span class="hero__word">STUDIO</span>
+        <span class="hero__word">In the universe</span>
       </div>
     </div>
 
-    <!-- Sub copy -->
-    <div class="hero__sub-wrap" id="hero-sub">
-      <p class="hero__sub-line">Born in Seoul</p>
-      <p class="hero__sub-line">Based in Berlin</p>
-    </div>
-
-    <!-- Service buttons -->
+    <!-- Service buttons — bottom row -->
     <div class="hero__services" id="hero-services">
       <a href="services/inhouse/index.html" class="hero__service-btn">
         <span class="hero__service-btn__label">Inhouse Design</span>
@@ -84,31 +90,22 @@
       </a>
     </div>
 
-    <!-- Scroll hint -->
-    <div class="hero__scroll" id="hero-scroll">
-      <span>SCROLL</span>
-      <div class="hero__scroll-line"></div>
-    </div>
-
-    <!-- CTA pill -->
-    <a href="#contact" class="hero__pill" id="hero-pill" data-cursor="link">Start a project</a>
-
   </section>
 
   <!-- ─── TICKER BAR ─── -->
   <div class="ticker" id="ticker">
     <div class="ticker__track">
       <div class="ticker__inner" id="ticker-inner">
-        <span>Woojoo.Studio</span><span class="ticker__sep">✌️</span>
-        <span>ALL ARE WELCOME</span><span class="ticker__sep">✌️</span>
+        <span>Woojoo.Studio</span><span class="ticker__sep">·</span>
+        <span>ALL are welcome</span><span class="ticker__sep">·</span>
         <span>Based in</span><span class="ticker__city" id="ticker-city">Berlin</span>
-        <span class="ticker__clock" id="ticker-clock">--:--:-- --</span><span class="ticker__sep">✌️</span>
-        <span>We are all unique in the universe</span><span class="ticker__sep">✌️</span>
-        <span>Woojoo.Studio</span><span class="ticker__sep">✌️</span>
-        <span>ALL ARE WELCOME</span><span class="ticker__sep">✌️</span>
+        <span class="ticker__clock" id="ticker-clock">--:--:-- --</span><span class="ticker__sep">·</span>
+        <span>We are all unique in the universe</span><span class="ticker__sep">·</span>
+        <span>Woojoo.Studio</span><span class="ticker__sep">·</span>
+        <span>ALL are welcome</span><span class="ticker__sep">·</span>
         <span>Based in</span><span class="ticker__city">Berlin</span>
-        <span class="ticker__clock">--:--:-- --</span><span class="ticker__sep">✌️</span>
-        <span>We are all unique in the universe</span><span class="ticker__sep">✌️</span>
+        <span class="ticker__clock">--:--:-- --</span><span class="ticker__sep">·</span>
+        <span>We are all unique in the universe</span><span class="ticker__sep">·</span>
       </div>
     </div>
   </div>
@@ -119,9 +116,7 @@
       <div class="section-label">Works</div>
       <div class="section-rule"></div>
       <h2 class="section-title">
-        <span class="st-line">Listen</span>
-        <span class="st-line">to your</span>
-        <span class="st-line">eyes</span>
+        <span class="st-line">We visualise</span>
       </h2>
     </div>
 
@@ -295,25 +290,11 @@
   <section class="contact-section" id="contact">
     <div class="contact-inner">
       <h2 class="contact-title">
-        <span class="st-line">Got a Partnership</span>
-        <span class="st-line">in mind?</span>
-        <span class="st-line contact-title__red">Let's bond.</span>
+        <span class="st-line">Want to visualize</span>
+        <span class="st-line">your idea?</span>
+        <span class="st-line contact-title__red">Would you like Woojoo?</span>
       </h2>
 
-      <div class="contact-links reveal-fade">
-        <a href="mailto:hello@woojoo.studio" class="contact-link" data-cursor="link">
-          <span class="contact-link__label">Project Inquiries</span>
-          <span class="contact-link__email">hello@woojoo.studio</span>
-        </a>
-        <a href="tel:+4917634435513" class="contact-link" data-cursor="link">
-          <span class="contact-link__label">Make a Call</span>
-          <span class="contact-link__email">+49 176 3443 5513</span>
-        </a>
-        <a href="https://instagram.com/woojoo.studio" class="contact-link" data-cursor="link" target="_blank" rel="noopener">
-          <span class="contact-link__label">Instagram</span>
-          <span class="contact-link__email">@Woojoo.studio</span>
-        </a>
-      </div>
     </div>
   </section>
 
@@ -323,42 +304,45 @@
       <div class="footer__ticker" id="footer-ticker">
         <div class="footer__ticker-inner">
           <a href="#works"   data-cursor="link">Woojoo.Studio</a>
-          <span class="ticker__sep">✌️</span>
-          <a href="#works"   data-cursor="link">ALL ARE WELCOME</a>
-          <span class="ticker__sep">✌️</span>
+          <span class="ticker__sep">·</span>
+          <a href="#works"   data-cursor="link">ALL are welcome</a>
+          <span class="ticker__sep">·</span>
           <span>We are all unique in the universe</span>
-          <span class="ticker__sep">✌️</span>
+          <span class="ticker__sep">·</span>
           <span>Based in Berlin</span>
-          <span class="ticker__sep">✌️</span>
+          <span class="ticker__sep">·</span>
           <span>Project Inquiries</span>
-          <span class="ticker__sep">✌️</span>
+          <span class="ticker__sep">·</span>
           <!-- duplicate for seamless loop -->
           <a href="#works"   data-cursor="link">Woojoo.Studio</a>
-          <span class="ticker__sep">✌️</span>
-          <a href="#works"   data-cursor="link">ALL ARE WELCOME</a>
-          <span class="ticker__sep">✌️</span>
+          <span class="ticker__sep">·</span>
+          <a href="#works"   data-cursor="link">ALL are welcome</a>
+          <span class="ticker__sep">·</span>
           <span>We are all unique in the universe</span>
-          <span class="ticker__sep">✌️</span>
+          <span class="ticker__sep">·</span>
           <span>Based in Berlin</span>
-          <span class="ticker__sep">✌️</span>
+          <span class="ticker__sep">·</span>
           <span>Project Inquiries</span>
-          <span class="ticker__sep">✌️</span>
+          <span class="ticker__sep">·</span>
         </div>
       </div>
     </div>
 
-    <!-- CTA circles (from Figma footer) -->
-    <div class="footer__ctas">
-      <a href="mailto:hello@woojoo.studio" class="footer__cta-circle" data-cursor="link">
-        <span>Project<br/>Inquiries</span>
+    <div class="footer__ctas contact-links reveal-fade">
+      <a href="mailto:hello@woojoo.studio" class="contact-link" data-cursor="link">
+        <span class="contact-link__label">Project Inquiries</span>
+        <span class="contact-link__email">hello@woojoo.studio</span>
       </a>
-      <a href="tel:+4915123456789" class="footer__cta-circle" data-cursor="link">
-        <span>Make<br/>a Call</span>
+      <a href="https://instagram.com/woojoo.studio" class="contact-link" data-cursor="link" target="_blank" rel="noopener">
+        <span class="contact-link__label">Instagram</span>
+        <span class="contact-link__email">@Woojoo.studio</span>
       </a>
-      <a href="#" class="footer__cta-circle" data-cursor="link" target="_blank" rel="noopener">
-        <span>Instagram</span>
+      <a href="https://linkedin.com/company/woojoo-studio" class="contact-link" data-cursor="link" target="_blank" rel="noopener">
+        <span class="contact-link__label">LinkedIn</span>
+        <span class="contact-link__email">Woojoo.Studio</span>
       </a>
     </div>
+      </a>
 
     <div class="footer__bottom">
       <span>© 2026 Woojoo.Studio. All rights reserved</span>
