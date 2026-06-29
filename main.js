@@ -250,7 +250,6 @@
     initRevealFades();
     initSmoothAnchors();
   }
-
   /* ══════════════════════════════════
      NAV
   ══════════════════════════════════ */
@@ -342,19 +341,13 @@
   }
 
   /* ══════════════════════════════════
-     WORKS — horizontal scroll
+     WORKS — horizontal scroll (desktop only)
   ══════════════════════════════════ */
   function initWorks() {
     const track = document.getElementById('works-track');
     if (!track) return;
 
-    const isMobile = window.innerWidth <= 768;
-
-    if (isMobile) {
-      /* 모바일: GSAP 인라인 스타일 완전 제거, ScrollTrigger 생성 안 함 */
-      gsap.set([track, '.works-hscroll'], { clearProps: 'all' });
-      return;
-    }
+    if (window.innerWidth <= 768) return; /* 모바일: CSS 네이티브 스냅만 사용 */
 
     track.querySelectorAll('.work-card').forEach((card, i) => {
       gsap.from(card, {
@@ -388,30 +381,30 @@
       });
     });
 
-    /* ── Service cards: 데스크톱만 scale-down ── */
+    /* ── Service cards: 데스크톱만 scale-down + 모바일은 fade-in만 ── */
     const sCards = Array.from(document.querySelectorAll('.service-card'));
-    const isMobileS = window.innerWidth <= 768;
+    const isMobile = window.innerWidth <= 768;
 
     sCards.forEach((card, i) => {
-      gsap.from(card, {
-        y: isMobileS ? 30 : 80,
-        opacity: 0, duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: card, start: 'top 88%', once: true },
-      });
-
-      if (!isMobileS && i < sCards.length - 1) {
-        gsap.to(card, {
-          scale: 0.94,
-          transformOrigin: 'top center',
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sCards[i + 1],
-            start: 'top 80%',
-            end:   'top 20%',
-            scrub: true,
-          },
+      if (!isMobile) {
+        gsap.from(card, {
+          y: 80, opacity: 0, duration: 0.8,
+          ease: 'power3.out',
+          scrollTrigger: { trigger: card, start: 'top 88%', once: true },
         });
+        if (i < sCards.length - 1) {
+          gsap.to(card, {
+            scale: 0.94,
+            transformOrigin: 'top center',
+            ease: 'none',
+            scrollTrigger: {
+              trigger: sCards[i + 1],
+              start: 'top 80%',
+              end:   'top 20%',
+              scrub: true,
+            },
+          });
+        }
       }
     });
 
