@@ -753,7 +753,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   /* ── Works 가로 스크롤 ── */
   .works-hscroll {
     overflow-x: auto !important;
-    overflow-y: visible;
+    overflow-y: visible !important;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     padding: 0 20px;
@@ -763,6 +763,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     display: flex;
     transform: none !important;
     will-change: auto;
+    width: max-content;
   }
   .work-card {
     width: 82vw;
@@ -770,14 +771,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     scroll-snap-align: start;
   }
 
-  /* ── Services 카드 스택 해제 ── */
+  /* ── Services 카드 스택 — sticky 유지, GSAP scale만 제거 ── */
   .service-card {
-    position: relative !important;
-    top: auto !important;
-    margin-top: 12px;
     transform: none !important;
   }
-  .service-card:first-child { margin-top: 0; }
 
   /* ── Contact ── */
   .contact-links { flex-direction: column; }
