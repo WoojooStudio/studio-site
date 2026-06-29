@@ -90,7 +90,6 @@
 
   const preloader    = document.getElementById('preloader');
   const preloaderW   = document.getElementById('preloader-word');
-  const preloaderFil = document.getElementById('preloader-fill');
   const preloaderCnt = document.getElementById('preloader-count');
 
   let wordIdx = 0;
@@ -140,7 +139,6 @@
       });
     },
   })
-  .to(preloaderFil, { width: '100%', duration: 2.2, ease: 'power2.inOut' }, 0)
   .to(counter, {
     val: 100, duration: 2.2, ease: 'power2.inOut',
     onUpdate() { if (preloaderCnt) preloaderCnt.textContent = Math.round(counter.val); },
