@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Woojoo.Studio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,400&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --dark: #0a0a12;
+      --bg:   #FEFEFE;
+      --blue: #3D61CF;
+      --lav:  #C8CFFF;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--dark);
+      overflow: hidden;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    #canvas {
+      position: fixed; inset: 0;
+      width: 100%; height: 100%;
+      z-index: 0;
+    }
+
+    .screen {
+      position: fixed; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      z-index: 10;
+      opacity: 0;
+      pointer-events: none;
+    }
+    .screen.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ── SCREEN 1: word cycle ── */
+    #screen-intro .word-wrap {
+      height: clamp(50px, 10vw, 90px);
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    #screen-intro .word {
+      font-size: clamp(28px, 6vw, 60px);
+      line-height: 1;
+      color: var(--bg);
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    /* ── SCREEN 2: coming soon ── */
+    #screen-soon {
+      gap: 0;
+      overflow: hidden;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(11px, 1.2vw, 15px);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(200,207,255,.4);
+      margin-bottom: clamp(28px, 5vw, 52px);
+    }
+
+    /* tagline — two lines slide from sides */
+    .tagline {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+      margin-bottom: clamp(24px, 4vw, 44px);
+    }
+
+    .tagline__line {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(22px, 4.5vw, 56px);
+      font-weight: 300;
+      letter-spacing: -.01em;
+      color: var(--bg);
+      white-space: nowrap;
+      will-change: transform, opacity;
+    }
+
+    .title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(36px, 8vw, 96px);
+      line-height: .88;
+      letter-spacing: -.025em;
+      text-transform: uppercase;
+      color: var(--bg);
+      text-align: center;
+      margin-bottom: clamp(32px, 5vw, 56px);
+    }
+
+    /* ── FLOATING GLASS CONTACT BUTTON ── */
+    .contact-btn-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    /* outer pulse ring */
+    .contact-btn-wrap::before {
+      content: '';
+      position: absolute;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      border: 1px solid rgba(200,207,255,.25);
+      animation: ringPulse 3s ease-out infinite;
+    }
+    .contact-btn-wrap::after {
+      content: '';
+      position: absolute;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      border: 1px solid rgba(200,207,255,.15);
+      animation: ringPulse 3s ease-out infinite .8s;
+    }
+
+    @keyframes ringPulse {
+      0%   { transform: scale(1);   opacity: 1; }
+      100% { transform: scale(1.7); opacity: 0; }
+    }
+
+    .contact-btn {
+      width: clamp(120px, 16vw, 160px);
+      height: clamp(120px, 16vw, 160px);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      text-decoration: none;
+
+      /* glass effect */
+      background: rgba(254,254,254,.08);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(254,254,254,.18);
+      box-shadow: 0 8px 32px rgba(61,97,207,.2), inset 0 1px 0 rgba(254,254,254,.15);
+
+      transition: background .35s ease, border-color .35s ease, transform .35s cubic-bezier(0.16,1,0.3,1), box-shadow .35s ease;
+      cursor: pointer;
+    }
+
+    .contact-btn:hover {
+      background: rgba(61,97,207,.35);
+      border-color: rgba(200,207,255,.5);
+      transform: scale(1.08);
+      box-shadow: 0 16px 48px rgba(61,97,207,.4), inset 0 1px 0 rgba(254,254,254,.2);
+      animation: none; /* stop float on hover */
+    }
+
+    .contact-btn:hover .contact-btn__icon {
+      transform: translateX(3px);
+    }
+
+    .contact-btn__label {
+      font-family: 'DM Sans', sans-serif;
+      font-size: clamp(11px, 1.1vw, 14px);
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--bg);
+    }
+
+    .contact-btn__icon {
+      color: rgba(200,207,255,.8);
+      transition: transform .3s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    /* bottom meta */
+    .meta {
+      position: fixed;
+      bottom: 24px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 20;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(200,207,255,.2);
+      white-space: nowrap;
+      opacity: 0;
+    }
+
+    .bottom-gradient {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 160px;
+      background: linear-gradient(to top, rgba(10,10,18,.7) 0%, transparent 100%);
+      z-index: 5;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="canvas"></canvas>
+
+  <!-- Screen 1: word cycle -->
+  <div class="screen active" id="screen-intro">
+    <div class="word-wrap">
+      <span class="word" id="word">Woojoo</span>
+    </div>
+  </div>
+
+  <!-- Screen 2: coming soon -->
+  <div class="screen" id="screen-soon">
+    <p class="logo">Woojoo.Studio</p>
+
+    <!-- tagline: two lines from sides -->
+    <div class="tagline">
+      <span class="tagline__line" id="line1">We are all unique</span>
+      <span class="tagline__line" id="line2">in the universe</span>
+    </div>
+
+    <h1 class="title">Coming<br/>Soon</h1>
+
+    <div class="contact-btn-wrap">
+      <a href="mailto:hello@woojoo.studio" class="contact-btn">
+        <span class="contact-btn__label">Contact</span>
+        <svg class="contact-btn__icon" width="14" height="14" viewBox="0 0 16 16" fill="none">
+          <path d="M2 8h12M8 2l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="bottom-gradient"></div>
+  <div class="meta" id="meta">© 2026 Woojoo.Studio</div>
+
+  <script>
+  (function () {
+
+    /* ── CANVAS ── */
+    const canvas = document.getElementById('canvas');
+    const ctx    = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+
+    const stars = Array.from({ length: 280 }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1.3 + 0.2,
+      a: Math.random(),
+      speed: Math.random() * 0.0003 + 0.00008,
+      twinkle: Math.random() * Math.PI * 2,
+    }));
+
+    const NEBULAE = [
+      { x: 0.15, y: 0.8,  rx: 0.4,  ry: 0.3,  color: [61,97,207],   a: 0.2  },
+      { x: 0.85, y: 0.2,  rx: 0.35, ry: 0.25, color: [61,97,207],   a: 0.16 },
+      { x: 0.5,  y: 0.5,  rx: 0.5,  ry: 0.35, color: [200,207,255], a: 0.07 },
+    ];
+
+    let t = 0;
+    function drawFrame() {
+      const W = canvas.width, H = canvas.height;
+      t += 0.005;
+      ctx.fillStyle = '#0a0a12';
+      ctx.fillRect(0, 0, W, H);
+      NEBULAE.forEach((n) => {
+        const cx = (n.x + Math.sin(t * 0.25 + n.x * 3) * 0.012) * W;
+        const cy = (n.y + Math.cos(t * 0.2  + n.y * 3) * 0.01)  * H;
+        const rx = n.rx * W, ry = n.ry * H;
+        const g  = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(rx, ry));
+        const [r, gb, b] = n.color;
+        g.addColorStop(0,   `rgba(${r},${gb},${b},${n.a})`);
+        g.addColorStop(0.5, `rgba(${r},${gb},${b},${n.a * 0.35})`);
+        g.addColorStop(1,   `rgba(${r},${gb},${b},0)`);
+        ctx.save();
+        ctx.scale(1, ry / rx);
+        ctx.beginPath();
+        ctx.arc(cx, cy * (rx / ry), rx, 0, Math.PI * 2);
+        ctx.fillStyle = g;
+        ctx.fill();
+        ctx.restore();
+      });
+      stars.forEach((s) => {
+        s.twinkle += s.speed * 55;
+        const alpha = s.a * (0.4 + 0.6 * Math.abs(Math.sin(s.twinkle)));
+        ctx.beginPath();
+        ctx.arc(s.x * W, ((s.y + t * s.speed) % 1) * H, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(254,254,254,${alpha})`;
+        ctx.fill();
+      });
+      requestAnimationFrame(drawFrame);
+    }
+    drawFrame();
+
+    /* ── WORD CYCLE ── */
+    const WORDS = [
+      { text: 'Woojoo',   font: "'Bebas Neue', sans-serif",       style: 'normal', weight: 400 },
+      { text: '우주',      font: "'DM Sans', sans-serif",          style: 'normal', weight: 700 },
+      { text: 'Universe', font: "'Cormorant Garamond', serif",     style: 'italic', weight: 300 },
+      { text: 'Studio',   font: "'Space Grotesk', sans-serif",     style: 'normal', weight: 700 },
+      { text: 'Design',   font: "'Playfair Display', serif",       style: 'italic', weight: 400 },
+      { text: 'Unique',   font: "'Cormorant Garamond', serif",     style: 'italic', weight: 600 },
+      { text: 'Berlin',   font: "'Space Grotesk', sans-serif",     style: 'normal', weight: 300 },
+      { text: 'Woojoo.',  font: "'Bebas Neue', sans-serif",        style: 'normal', weight: 400 },
+    ];
+
+    const wordEl  = document.getElementById('word');
+    const introEl = document.getElementById('screen-intro');
+    const soonEl  = document.getElementById('screen-soon');
+    const metaEl  = document.getElementById('meta');
+    const line1   = document.getElementById('line1');
+    const line2   = document.getElementById('line2');
+
+    let idx = 0;
+    const first = WORDS[0];
+    wordEl.textContent      = first.text;
+    wordEl.style.fontFamily = first.font;
+    wordEl.style.fontStyle  = first.style;
+    wordEl.style.fontWeight = first.weight;
+
+    gsap.to(introEl, { opacity: 1, duration: 0.6, ease: 'power2.out' });
+
+    function nextWord() {
+      idx = (idx + 1) % WORDS.length;
+      const w = WORDS[idx];
+      gsap.to(wordEl, {
+        y: -20, opacity: 0, duration: 0.18, ease: 'power2.in',
+        onComplete() {
+          wordEl.textContent      = w.text;
+          wordEl.style.fontFamily = w.font;
+          wordEl.style.fontStyle  = w.style;
+          wordEl.style.fontWeight = w.weight;
+          gsap.fromTo(wordEl, { y: 20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.26, ease: 'power3.out' });
+        },
+      });
+    }
+
+    let count = 0;
+    const interval = setInterval(() => {
+      nextWord();
+      count++;
+      if (count >= WORDS.length - 1) {
+        clearInterval(interval);
+        setTimeout(showSoon, 500);
+      }
+    }, 300);
+
+    function showSoon() {
+      /* Set initial positions for tagline lines */
+      gsap.set(line1, { x: '-60vw', opacity: 0 });
+      gsap.set(line2, { x:  '60vw', opacity: 0 });
+
+      const tl = gsap.timeline();
+
+      tl.to(introEl, {
+        opacity: 0, duration: 0.6, ease: 'power2.inOut',
+        onComplete() { introEl.classList.remove('active'); },
+      })
+      .call(() => { soonEl.classList.add('active'); })
+      .fromTo(soonEl, { opacity: 0 }, { opacity: 1, duration: 0.01 })
+
+      /* logo */
+      .from(soonEl.querySelector('.logo'), {
+        y: 16, opacity: 0, duration: 0.5, ease: 'power3.out',
+      }, '+=0.1')
+
+      /* tagline: both lines slide to center simultaneously */
+      .to([line1, line2], {
+        x: 0, opacity: 1,
+        duration: 1.1,
+        ease: 'power4.out',
+        stagger: 0.12,
+      }, '-=0.2')
+
+      /* coming soon title */
+      .from(soonEl.querySelector('.title'), {
+        y: 30, opacity: 0, duration: 0.7, ease: 'power3.out',
+      }, '-=0.5')
+
+      /* contact button */
+      .from(soonEl.querySelector('.contact-btn-wrap'), {
+        scale: 0.7, opacity: 0, duration: 0.7, ease: 'back.out(1.8)',
+      }, '-=0.3')
+
+      /* meta copyright */
+      .to(metaEl, { opacity: 1, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+    }
+
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+/* ═══════════════════════════════════════
+   Woojoo.Studio — project page shared CSS
+   ═══════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg:       #FEFEFE;
+  --blue:     #3D61CF;
+  --lavender: #C8CFFF;
+  --dark:     #37343B;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html { font-size: 16px; scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--dark);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+}
+
+a { text-decoration: none; color: inherit; }
+img { display: block; width: 100%; object-fit: cover; }
+
+/* ── NAV ── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 72px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 clamp(20px, 4vw, 60px);
+  z-index: 100;
+  background: rgba(254,254,254,.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(61,97,207,.1);
+}
+
+.nav__logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 22px; letter-spacing: .02em;
+  color: var(--dark);
+  transition: color .25s;
+}
+.nav__logo:hover { color: var(--blue); }
+
+.nav__back {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  color: var(--dark); opacity: .5;
+  display: flex; align-items: center; gap: 8px;
+  transition: opacity .25s, color .25s;
+}
+.nav__back:hover { opacity: 1; color: var(--blue); }
+.nav__back svg { transition: transform .3s var(--ease-out); }
+.nav__back:hover svg { transform: translateX(-4px); }
+
+/* ── HERO ── */
+.project-hero {
+  padding-top: 72px;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+.project-hero__media {
+  flex: 1;
+  min-height: 60vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.project-hero__media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transform: scale(1.04);
+  animation: heroZoom 1.4s var(--ease-out) forwards;
+}
+
+@keyframes heroZoom {
+  to { transform: scale(1); }
+}
+
+.project-hero__info {
+  padding: clamp(32px, 5vw, 64px) clamp(20px, 5vw, 60px);
+  display: flex; flex-wrap: wrap;
+  align-items: flex-end; justify-content: space-between;
+  gap: 24px;
+  border-bottom: 1px solid rgba(61,97,207,.15);
+}
+
+.project-hero__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(52px, 10vw, 130px);
+  line-height: .9; letter-spacing: -.025em;
+  text-transform: uppercase;
+  color: var(--dark);
+}
+
+.project-hero__meta {
+  display: flex; flex-direction: column; gap: 10px;
+  align-items: flex-end;
+}
+
+.project-hero__desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(16px, 1.8vw, 22px); font-weight: 400;
+  color: var(--blue); text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+.project-hero__tags {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end;
+}
+
+.project-hero__tag {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: .08em; text-transform: uppercase;
+  border: 1px solid rgba(61,97,207,.3);
+  color: var(--blue);
+  padding: 5px 14px; border-radius: 100px;
+}
+
+/* ── CONTENT ── */
+.project-content {
+  padding: clamp(48px, 8vw, 100px) clamp(20px, 5vw, 60px);
+  max-width: 900px;
+}
+
+.project-content__label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: .12em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 20px; display: block;
+}
+
+.project-content__body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: clamp(17px, 1.8vw, 22px); font-weight: 400;
+  line-height: 1.75;
+  color: var(--dark);
+  opacity: .8;
+}
+
+/* ── GALLERY ── */
+.project-gallery {
+  padding: 0 clamp(20px, 5vw, 60px) clamp(60px, 8vw, 100px);
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.project-gallery img {
+  border-radius: 12px;
+  aspect-ratio: 4/3;
+  transition: transform .6s var(--ease-out);
+}
+
+.project-gallery img:first-child {
+  grid-column: 1 / -1;
+  aspect-ratio: 16/7;
+}
+
+.project-gallery img:hover { transform: scale(1.02); }
+
+/* ── NEXT PROJECT ── */
+.next-project {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: clamp(40px, 6vw, 80px) clamp(20px, 5vw, 60px);
+  border-top: 1px solid rgba(61,97,207,.15);
+  transition: background .35s;
+}
+
+.next-project:hover { background: var(--lavender); }
+
+.next-project__label {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 8px; display: block;
+}
+
+.next-project__title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(32px, 6vw, 72px);
+  line-height: 1; letter-spacing: -.02em;
+  text-transform: uppercase; color: var(--dark);
+}
+
+.next-project__arrow {
+  font-size: clamp(28px, 4vw, 48px);
+  color: var(--blue);
+  transition: transform .35s var(--ease-out);
+}
+.next-project:hover .next-project__arrow { transform: translateX(12px); }
+
+/* ── FOOTER ── */
+.project-footer {
+  padding: 20px clamp(20px, 5vw, 60px);
+  border-top: 1px solid rgba(61,97,207,.1);
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.project-footer span {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  letter-spacing: .06em; text-transform: uppercase;
+  color: rgba(55,52,59,.3);
+}
+
+/* ── REVEAL ── */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .8s var(--ease-out), transform .8s var(--ease-out);
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .project-hero__info { flex-direction: column; align-items: flex-start; }
+  .project-hero__meta { align-items: flex-start; }
+  .project-hero__tags { justify-content: flex-start; }
+  .project-gallery { grid-template-columns: 1fr; }
+  .project-gallery img:first-child { grid-column: 1; }
+}

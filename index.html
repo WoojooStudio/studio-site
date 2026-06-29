@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Woojoo.Studio — Design & Brand Identity</title>
+
+  <!-- Bebas Neue · DM Sans · Playfair Display · Cormorant Garamond · Space Grotesk -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet" />
+
+  <!-- GSAP + ScrollTrigger + Lenis -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-follower" id="cursor-follower">
+    <span class="cursor-follower__label"></span>
+  </div>
+
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="preloader__word-wrap">
+      <span class="preloader__word" id="preloader-word">Woojoo</span>
+    </div>
+    <div class="preloader__bar"><div class="preloader__fill" id="preloader-fill"></div></div>
+    <div class="preloader__count" id="preloader-count">0</div>
+  </div>
+
+  <!-- ─── NAVIGATION ─── -->
+  <nav class="nav" id="nav">
+    <div class="nav__center">
+      <a href="#works"   class="nav__link" data-cursor="link">Works</a>
+      <a href="#studio"  class="nav__link" data-cursor="link">Studio</a>
+      <a href="#contact" class="nav__link" data-cursor="link">Contact</a>
+      <a href="#"        class="nav__link" data-cursor="link">Follow</a>
+    </div>
+    <a href="#contact" class="nav__cta" data-cursor="link">Start a project</a>
+  </nav>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero" id="hero">
+
+    <!-- Cosmic gradient canvas (replaces image) -->
+    <canvas class="hero__canvas" id="hero-canvas"></canvas>
+    <div class="hero__gradient-overlay"></div>
+
+    <!-- WOOJOO. / STUDIO — 2 rows, slide from sides -->
+    <div class="hero__title-wrap" aria-label="Woojoo.Studio">
+      <div class="hero__row hero__row--left" id="hero-work">
+        <span class="hero__word">WOOJOO.</span>
+      </div>
+      <div class="hero__row hero__row--right" id="hero-bond">
+        <span class="hero__word">STUDIO</span>
+      </div>
+    </div>
+
+    <!-- Sub copy -->
+    <div class="hero__sub-wrap" id="hero-sub">
+      <p class="hero__sub-line">Born in Seoul</p>
+      <p class="hero__sub-line">Based in Berlin</p>
+    </div>
+
+    <!-- Service buttons -->
+    <div class="hero__services" id="hero-services">
+      <a href="services/inhouse/index.html" class="hero__service-btn">
+        <span class="hero__service-btn__label">Inhouse Design</span>
+        <span class="hero__service-btn__tag">Design</span>
+      </a>
+      <a href="services/brand/index.html" class="hero__service-btn">
+        <span class="hero__service-btn__label">Brand Design</span>
+        <span class="hero__service-btn__tag">Art Direction · Brand Strategy · Design</span>
+      </a>
+      <a href="services/community/index.html" class="hero__service-btn">
+        <span class="hero__service-btn__label">Community Events</span>
+        <span class="hero__service-btn__tag">Planning · Operations · Marketing · Design</span>
+      </a>
+    </div>
+
+    <!-- Scroll hint -->
+    <div class="hero__scroll" id="hero-scroll">
+      <span>SCROLL</span>
+      <div class="hero__scroll-line"></div>
+    </div>
+
+    <!-- CTA pill -->
+    <a href="#contact" class="hero__pill" id="hero-pill" data-cursor="link">Start a project</a>
+
+  </section>
+
+  <!-- ─── TICKER BAR ─── -->
+  <div class="ticker" id="ticker">
+    <div class="ticker__track">
+      <div class="ticker__inner" id="ticker-inner">
+        <span>Woojoo.Studio</span><span class="ticker__sep">✌️</span>
+        <span>ALL ARE WELCOME</span><span class="ticker__sep">✌️</span>
+        <span>Based in</span><span class="ticker__city" id="ticker-city">Berlin</span>
+        <span class="ticker__clock" id="ticker-clock">--:--:-- --</span><span class="ticker__sep">✌️</span>
+        <span>We are all unique in the universe</span><span class="ticker__sep">✌️</span>
+        <span>Woojoo.Studio</span><span class="ticker__sep">✌️</span>
+        <span>ALL ARE WELCOME</span><span class="ticker__sep">✌️</span>
+        <span>Based in</span><span class="ticker__city">Berlin</span>
+        <span class="ticker__clock">--:--:-- --</span><span class="ticker__sep">✌️</span>
+        <span>We are all unique in the universe</span><span class="ticker__sep">✌️</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── WORKS ─── -->
+  <section class="works-section" id="works">
+    <div class="section-header">
+      <div class="section-label">Works</div>
+      <div class="section-rule"></div>
+      <h2 class="section-title">
+        <span class="st-line">Listen</span>
+        <span class="st-line">to your</span>
+        <span class="st-line">eyes</span>
+      </h2>
+    </div>
+
+    <!-- Horizontal scroll container -->
+    <div class="works-hscroll" id="works-hscroll">
+      <div class="works-track" id="works-track">
+
+        <a class="work-card" data-cursor="view" href="works/grana/index.html">
+          <div class="work-card__media">
+            <img src="assets/images/work-grana.png" alt="Grana" />
+          </div>
+          <div class="work-card__info">
+            <span class="work-card__num">(001)</span>
+            <div class="work-card__body">
+              <h3 class="work-card__title">Grana</h3>
+              <div class="work-card__rule"></div>
+              <p class="work-card__desc">Essence of Italian Heritage</p>
+            </div>
+          </div>
+        </a>
+
+        <a class="work-card" data-cursor="view" href="works/gold-idol/index.html">
+          <div class="work-card__media">
+            <img src="assets/images/work-gold-idol.png" alt="Gold Idol Wine" />
+          </div>
+          <div class="work-card__info">
+            <span class="work-card__num">(002)</span>
+            <div class="work-card__body">
+              <h3 class="work-card__title">Gold Idol Wine</h3>
+              <div class="work-card__rule"></div>
+              <p class="work-card__desc">It's not the gold that matters</p>
+            </div>
+          </div>
+        </a>
+
+        <a class="work-card" data-cursor="view" href="works/toppers/index.html">
+          <div class="work-card__media">
+            <img src="assets/images/work-toppers.png" alt="Toppers Pizza" />
+          </div>
+          <div class="work-card__info">
+            <span class="work-card__num">(003)</span>
+            <div class="work-card__body">
+              <h3 class="work-card__title">Toppers Pizza</h3>
+              <div class="work-card__rule"></div>
+              <p class="work-card__desc">Only Pans — Consensual crust play</p>
+            </div>
+          </div>
+        </a>
+
+        <a class="work-card" data-cursor="view" href="works/campana/index.html">
+          <div class="work-card__media">
+            <img src="assets/images/work-campana.png" alt="Campana Coffee" />
+          </div>
+          <div class="work-card__info">
+            <span class="work-card__num">(004)</span>
+            <div class="work-card__body">
+              <h3 class="work-card__title">Campana Coffee</h3>
+              <div class="work-card__rule"></div>
+              <p class="work-card__desc">Bell-issimo!</p>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- See more -->
+    <div class="works-more">
+      <a href="#" class="pill pill--outline" data-cursor="link">see more work</a>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ─── -->
+  <section class="services-section" id="services">
+    <div class="section-header">
+      <div class="section-label">Services</div>
+      <div class="section-rule"></div>
+      <h2 class="section-title">
+        <span class="st-line">Memorability</span>
+        <span class="st-line">through</span>
+        <span class="st-line">Nimble Creative</span>
+      </h2>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card" data-cursor="link">
+        <div class="service-card__inner">
+          <h3 class="service-card__title">Brand Design</h3>
+          <div class="service-card__rule"></div>
+          <ul class="service-card__list">
+            <li>Visual Identity</li>
+            <li>Logo Design</li>
+            <li>Printed Materials &amp; Stationery</li>
+            <li>Custom Typography</li>
+            <li>Brand Guidelines</li>
+            <li>Color palette</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card" data-cursor="link">
+        <div class="service-card__inner">
+          <h3 class="service-card__title">Visual Experience</h3>
+          <div class="service-card__rule"></div>
+          <ul class="service-card__list">
+            <li>Web Design</li>
+            <li>Package design</li>
+            <li>Illustration &amp; Iconography</li>
+            <li>Visual tool-kits</li>
+            <li>3D Rendering</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card" data-cursor="link">
+        <div class="service-card__inner">
+          <h3 class="service-card__title">Design Consultancy</h3>
+          <div class="service-card__rule"></div>
+          <ul class="service-card__list">
+            <li>On-Location Art Direction</li>
+            <li>Creative Direction</li>
+            <li>Moodboards</li>
+            <li>Concept development</li>
+            <li>Naming</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="service-card" data-cursor="link">
+        <div class="service-card__inner">
+          <h3 class="service-card__title">Undying Bonds</h3>
+          <div class="service-card__rule"></div>
+          <ul class="service-card__list">
+            <li>Ongoing Brand Support</li>
+            <li>Social Media Content</li>
+            <li>Brand Collateral</li>
+            <li>Signage</li>
+            <li>Apparel</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ─── STUDIO ─── -->
+  <section class="studio-section" id="studio">
+    <div class="section-header">
+      <div class="section-label">Studio</div>
+      <div class="section-rule"></div>
+      <h2 class="section-title">
+        <span class="st-line">We work</span>
+        <span class="st-line">for good.</span>
+      </h2>
+    </div>
+    <div class="studio-body">
+      <p class="studio-body__text reveal-fade">
+        Woojoo.Studio is a design-centric studio building brands
+        that bond with the senses. We believe every person and every brand
+        is unique in the universe — and deserves to be seen that way.
+      </p>
+      <p class="studio-body__text reveal-fade">
+        Based in Berlin. Working worldwide.
+        We care about people and work with people that care.
+      </p>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section class="contact-section" id="contact">
+    <div class="contact-inner">
+      <h2 class="contact-title">
+        <span class="st-line">Got a Partnership</span>
+        <span class="st-line">in mind?</span>
+        <span class="st-line contact-title__red">Let's bond.</span>
+      </h2>
+
+      <div class="contact-links reveal-fade">
+        <a href="mailto:hello@woojoo.studio" class="contact-link" data-cursor="link">
+          <span class="contact-link__label">Project Inquiries</span>
+          <span class="contact-link__email">hello@woojoo.studio</span>
+        </a>
+        <a href="tel:+4917634435513" class="contact-link" data-cursor="link">
+          <span class="contact-link__label">Make a Call</span>
+          <span class="contact-link__email">+49 176 3443 5513</span>
+        </a>
+        <a href="https://instagram.com/woojoo.studio" class="contact-link" data-cursor="link" target="_blank" rel="noopener">
+          <span class="contact-link__label">Instagram</span>
+          <span class="contact-link__email">@Woojoo.studio</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER TICKER ─── -->
+  <footer class="footer">
+    <div class="footer__ticker-wrap">
+      <div class="footer__ticker" id="footer-ticker">
+        <div class="footer__ticker-inner">
+          <a href="#works"   data-cursor="link">Woojoo.Studio</a>
+          <span class="ticker__sep">✌️</span>
+          <a href="#works"   data-cursor="link">ALL ARE WELCOME</a>
+          <span class="ticker__sep">✌️</span>
+          <span>We are all unique in the universe</span>
+          <span class="ticker__sep">✌️</span>
+          <span>Based in Berlin</span>
+          <span class="ticker__sep">✌️</span>
+          <span>Project Inquiries</span>
+          <span class="ticker__sep">✌️</span>
+          <!-- duplicate for seamless loop -->
+          <a href="#works"   data-cursor="link">Woojoo.Studio</a>
+          <span class="ticker__sep">✌️</span>
+          <a href="#works"   data-cursor="link">ALL ARE WELCOME</a>
+          <span class="ticker__sep">✌️</span>
+          <span>We are all unique in the universe</span>
+          <span class="ticker__sep">✌️</span>
+          <span>Based in Berlin</span>
+          <span class="ticker__sep">✌️</span>
+          <span>Project Inquiries</span>
+          <span class="ticker__sep">✌️</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA circles (from Figma footer) -->
+    <div class="footer__ctas">
+      <a href="mailto:hello@woojoo.studio" class="footer__cta-circle" data-cursor="link">
+        <span>Project<br/>Inquiries</span>
+      </a>
+      <a href="tel:+4915123456789" class="footer__cta-circle" data-cursor="link">
+        <span>Make<br/>a Call</span>
+      </a>
+      <a href="#" class="footer__cta-circle" data-cursor="link" target="_blank" rel="noopener">
+        <span>Instagram</span>
+      </a>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© 2026 Woojoo.Studio. All rights reserved</span>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
+</body>
+</html>
