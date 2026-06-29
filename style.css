@@ -719,9 +719,15 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .cursor, .cursor-follower { display: none; }
 
   /* ── Nav ── */
+  .nav {
+    height: 70px;
+    background: rgba(8,8,16,.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+  }
   .nav__center { gap: 20px; }
   .nav__link { font-size: 14px; }
-  .nav__cta { display: none; } /* START A PROJECT 버튼 숨김 */
+  .nav__cta { display: none; }
 
   /* ── Hero ── */
   .hero {
