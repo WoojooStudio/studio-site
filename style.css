@@ -460,6 +460,28 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .works-section { background: var(--bg); }
 
 .works-hscroll { overflow: hidden; padding: 0 20px 0 100px; }
+
+@media (max-width: 768px) {
+  .works-hscroll {
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding: 0 20px;
+    height: auto;
+  }
+  .works-track {
+    display: flex;
+    transform: none !important;
+    will-change: auto;
+    width: max-content;
+  }
+  .work-card {
+    width: 82vw;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+}
 .works-track { display: flex; gap: 5px; will-change: transform; }
 
 .work-card {
@@ -686,12 +708,26 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .footer__cta-circle span { position: relative; z-index: 1; transition: color .3s; }
 .footer__cta-circle:hover { transform: scale(1.04); }
 
-.footer__bottom { padding: 20px 20px 16px; display: flex; justify-content: flex-end; }
+.footer__bottom {
+  padding: 20px 20px 16px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
 .footer__bottom span {
   font-family: 'Space Mono', monospace;
-  font-size: 12px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase;
+  font-size: 12px; font-weight: 500; letter-spacing: .05em; text-transform: capitalize;
   color: rgba(254,254,254,.25);
 }
+.footer__legal-links {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 12px; font-weight: 500; letter-spacing: .05em;
+  color: rgba(254,254,254,.25);
+}
+.footer__legal-links a {
+  color: rgba(254,254,254,.4);
+  transition: color .2s;
+}
+.footer__legal-links a:hover { color: var(--bg); }
 
 /* ══════════════════════════════════
    REVEAL UTILITY
@@ -756,27 +792,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .hero__service-btn__tag { display: none; }
   .hero__pill { display: none; }
   .hero__scroll { display: none; }
-
-  /* ── Works 가로 스크롤 ── */
-  .works-hscroll {
-    overflow-x: auto !important;
-    overflow-y: visible !important;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding: 0 20px;
-    height: auto !important;
-  }
-  .works-track {
-    display: flex;
-    transform: none !important;
-    will-change: auto;
-    width: max-content;
-  }
-  .work-card {
-    width: 82vw;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-  }
 
   /* ── Services 카드 스택 — sticky 유지, GSAP scale만 제거 ── */
   .service-card {

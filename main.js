@@ -351,9 +351,8 @@
     const isMobile = window.innerWidth <= 768;
 
     if (isMobile) {
-      /* 모바일: GSAP 전혀 건드리지 않음 — CSS 네이티브 스냅 스크롤만 사용 */
-      gsap.set(track, { clearProps: 'all' });
-      gsap.set('.works-hscroll', { clearProps: 'all' });
+      /* 모바일: GSAP 인라인 스타일 완전 제거, ScrollTrigger 생성 안 함 */
+      gsap.set([track, '.works-hscroll'], { clearProps: 'all' });
       return;
     }
 
