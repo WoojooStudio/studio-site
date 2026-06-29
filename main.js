@@ -261,24 +261,6 @@
       onLeaveBack: () => nav.classList.remove('is-scrolled'),
     });
     gsap.from(nav, { y: -20, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.1 });
-
-    /* 모바일 touch 드롭다운 토글 */
-    if (window.matchMedia('(pointer: coarse)').matches) {
-      document.querySelectorAll('.nav__dropdown > .nav__link').forEach((link) => {
-        link.addEventListener('click', (e) => {
-          const submenu = link.nextElementSibling;
-          if (!submenu) return;
-          const isOpen = submenu.classList.contains('is-open');
-          document.querySelectorAll('.nav__submenu.is-open').forEach(m => m.classList.remove('is-open'));
-          if (!isOpen) { e.preventDefault(); submenu.classList.add('is-open'); }
-        });
-      });
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav__dropdown')) {
-          document.querySelectorAll('.nav__submenu.is-open').forEach(m => m.classList.remove('is-open'));
-        }
-      });
-    }
   }
 
   /* ══════════════════════════════════
@@ -349,9 +331,8 @@
     const isMobile = window.innerWidth <= 768;
 
     if (isMobile) {
-      /* 모바일: GSAP 전혀 건드리지 않음 — CSS 네이티브 스냅 스크롤만 사용 */
+      /* 모바일: GSAP 완전 건드리지 않음 — CSS 네이티브 스냅 스크롤만 사용 */
       gsap.set(track, { clearProps: 'all' });
-      gsap.set('.works-hscroll', { clearProps: 'all' });
       return;
     }
 
