@@ -345,27 +345,25 @@
     const track = document.getElementById('works-track');
     if (!track) return;
 
-    ScrollTrigger.matchMedia({
-      '(min-width: 769px)': function () {
-        track.querySelectorAll('.work-card').forEach((card, i) => {
-          gsap.from(card, {
-            y: 70, opacity: 0, duration: 0.8, delay: i * 0.08,
-            ease: 'power3.out',
-            scrollTrigger: { trigger: card, start: 'top 92%', once: true },
-          });
-        });
+    if (window.innerWidth <= 768) return;
 
-        const getAmt = () => -(track.scrollWidth - window.innerWidth + 40);
-        gsap.to(track, {
-          x: getAmt, ease: 'none',
-          scrollTrigger: {
-            trigger: '.works-hscroll',
-            start: 'top top',
-            end: () => `+=${Math.abs(getAmt())}`,
-            pin: true, scrub: 1,
-            invalidateOnRefresh: true,
-          },
-        });
+    track.querySelectorAll('.work-card').forEach((card, i) => {
+      gsap.from(card, {
+        y: 70, opacity: 0, duration: 0.8, delay: i * 0.08,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 92%', once: true },
+      });
+    });
+
+    const getAmt = () => -(track.scrollWidth - window.innerWidth + 40);
+    gsap.to(track, {
+      x: getAmt, ease: 'none',
+      scrollTrigger: {
+        trigger: '.works-hscroll',
+        start: 'top top',
+        end: () => `+=${Math.abs(getAmt())}`,
+        pin: true, scrub: 1,
+        invalidateOnRefresh: true,
       },
     });
   }
