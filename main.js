@@ -261,6 +261,23 @@
       onLeaveBack: () => nav.classList.remove('is-scrolled'),
     });
     gsap.from(nav, { y: -20, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.1 });
+
+    /* 모바일 touch 드롭다운 */
+    document.querySelectorAll('.nav__dropdown > .nav__link').forEach((link) => {
+      link.addEventListener('click', (e) => {
+        if (!window.matchMedia('(pointer: coarse)').matches) return;
+        const submenu = link.nextElementSibling;
+        if (!submenu) return;
+        const isOpen = submenu.classList.contains('is-open');
+        document.querySelectorAll('.nav__submenu').forEach(m => m.classList.remove('is-open'));
+        if (!isOpen) { e.preventDefault(); submenu.classList.add('is-open'); }
+      });
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.nav__dropdown')) {
+        document.querySelectorAll('.nav__submenu').forEach(m => m.classList.remove('is-open'));
+      }
+    });
   }
 
   /* ══════════════════════════════════

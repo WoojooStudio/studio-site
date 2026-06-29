@@ -200,7 +200,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   transition: opacity .2s ease;
 }
 
-.nav__dropdown:hover .nav__submenu {
+.nav__dropdown:hover .nav__submenu,
+.nav__submenu.is-open {
   opacity: 1;
   pointer-events: auto;
 }
