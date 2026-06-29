@@ -339,13 +339,19 @@
   }
 
   /* ══════════════════════════════════
-     WORKS — horizontal scroll (desktop only via matchMedia)
+     WORKS — horizontal scroll
   ══════════════════════════════════ */
   function initWorks() {
     const track = document.getElementById('works-track');
     if (!track) return;
 
-    if (window.innerWidth <= 768) return;
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      /* 모바일: GSAP 완전 건드리지 않음 — CSS 네이티브 스냅 스크롤만 사용 */
+      gsap.set(track, { clearProps: 'all' });
+      return;
+    }
 
     track.querySelectorAll('.work-card').forEach((card, i) => {
       gsap.from(card, {
@@ -381,16 +387,17 @@
 
     /* ── Service cards: 데스크톱만 scale-down ── */
     const sCards = Array.from(document.querySelectorAll('.service-card'));
-    const isMobile = window.innerWidth <= 768;
+    const isMobileS = window.innerWidth <= 768;
 
     sCards.forEach((card, i) => {
-      if (isMobile) return; /* 모바일: GSAP scale 없음, sticky만 */
       gsap.from(card, {
-        y: 80, opacity: 0, duration: 0.8,
+        y: isMobileS ? 30 : 80,
+        opacity: 0, duration: 0.8,
         ease: 'power3.out',
         scrollTrigger: { trigger: card, start: 'top 88%', once: true },
       });
-      if (i < sCards.length - 1) {
+
+      if (!isMobileS && i < sCards.length - 1) {
         gsap.to(card, {
           scale: 0.94,
           transformOrigin: 'top center',
