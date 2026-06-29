@@ -248,6 +248,7 @@
     initRevealFades();
     initSmoothAnchors();
   }
+
   /* ══════════════════════════════════
      NAV
   ══════════════════════════════════ */
@@ -339,13 +340,20 @@
   }
 
   /* ══════════════════════════════════
-     WORKS — horizontal scroll (desktop only)
+     WORKS — horizontal scroll
   ══════════════════════════════════ */
   function initWorks() {
     const track = document.getElementById('works-track');
     if (!track) return;
 
-    if (window.innerWidth <= 768) return; /* 모바일: CSS 네이티브 스냅만 사용 */
+    const isMobile = window.innerWidth <= 768;
+
+    if (isMobile) {
+      /* 모바일: GSAP 전혀 건드리지 않음 — CSS 네이티브 스냅 스크롤만 사용 */
+      gsap.set(track, { clearProps: 'all' });
+      gsap.set('.works-hscroll', { clearProps: 'all' });
+      return;
+    }
 
     track.querySelectorAll('.work-card').forEach((card, i) => {
       gsap.from(card, {
@@ -379,30 +387,30 @@
       });
     });
 
-    /* ── Service cards: 데스크톱만 scale-down + 모바일은 fade-in만 ── */
+    /* ── Service cards: 데스크톱만 scale-down ── */
     const sCards = Array.from(document.querySelectorAll('.service-card'));
-    const isMobile = window.innerWidth <= 768;
+    const isMobileS = window.innerWidth <= 768;
 
     sCards.forEach((card, i) => {
-      if (!isMobile) {
-        gsap.from(card, {
-          y: 80, opacity: 0, duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+      gsap.from(card, {
+        y: isMobileS ? 30 : 80,
+        opacity: 0, duration: 0.8,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: card, start: 'top 88%', once: true },
+      });
+
+      if (!isMobileS && i < sCards.length - 1) {
+        gsap.to(card, {
+          scale: 0.94,
+          transformOrigin: 'top center',
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sCards[i + 1],
+            start: 'top 80%',
+            end:   'top 20%',
+            scrub: true,
+          },
         });
-        if (i < sCards.length - 1) {
-          gsap.to(card, {
-            scale: 0.94,
-            transformOrigin: 'top center',
-            ease: 'none',
-            scrollTrigger: {
-              trigger: sCards[i + 1],
-              start: 'top 80%',
-              end:   'top 20%',
-              scrub: true,
-            },
-          });
-        }
       }
     });
 
