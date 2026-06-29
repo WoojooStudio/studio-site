@@ -130,13 +130,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .preloader__bar { display: none; }
 .preloader__fill { height: 100%; background: var(--blue); width: 0; }
 
-.preloader__count {
-  font-family: 'Space Mono', monospace;
-  font-size: 12px; font-weight: 500;
-  letter-spacing: .12em;
-  color: rgba(254,254,254,.3);
-  font-variant-numeric: tabular-nums;
-}
+.preloader__count { display: none; }
 
 /* ══════════════════════════════════
    NAV
@@ -171,7 +165,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* 더 투명한 frosted glass — 불투명도 .3 */
 .nav.is-scrolled {
-  background: rgba(254,254,254,.28);
+  background: rgba(8,8,16,.92);
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
   border-bottom: 1px solid rgba(61,97,207,.12);
@@ -233,7 +227,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   transition: color .25s;
 }
 
-.nav.is-scrolled .nav__link { color: var(--dark); }
+.nav.is-scrolled .nav__link { color: var(--bg); }
 
 .nav__link::after {
   content: '';
@@ -716,61 +710,57 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .cursor, .cursor-follower { display: none; }
 
   /* ── Nav ── */
-  .nav__center { gap: 20px; }
-  .nav__link { font-size: 14px; }
-  .nav__cta { display: none; } /* START A PROJECT 버튼 숨김 */
+  .nav { height: 70px; padding: 0 20px; }
+  .nav__center { gap: 16px; }
+  .nav__link { font-size: 13px; }
+  .nav__cta { display: none; }
+
+  /* 모바일 드롭다운 — touch용 토글 */
+  .nav__submenu {
+    position: fixed;
+    top: 70px;
+    left: 0; right: 0;
+    border-radius: 0;
+    border-left: none; border-right: none;
+    min-width: unset;
+    padding: 8px 0;
+  }
+  .nav__submenu.is-open {
+    opacity: 1;
+    pointer-events: auto;
+  }
 
   /* ── Hero ── */
-  .hero {
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    padding-bottom: 48px;
-  }
-  .hero__title-wrap {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -54%);
-    width: 100%;
-  }
-  .hero__word { font-size: clamp(34px, 9vw, 50px); }
-  .hero__sub-wrap {
-    position: relative;
-    bottom: auto; left: auto;
-    transform: none;
-    margin-top: auto;
-    padding-top: 54vh;
-    align-items: center;
-  }
+  .hero__word { font-size: clamp(28px, 8vw, 44px); }
   .hero__services {
-    position: relative;
-    bottom: auto; left: auto;
-    width: calc(100% - 40px);
-    margin-top: 16px;
+    flex-direction: column;
+    position: absolute;
+    bottom: 24px;
+    left: 20px; right: 20px;
+    width: auto;
+    transform: none;
+    gap: 8px;
   }
   .hero__service-btn {
     width: 100%;
     justify-content: space-between;
-    padding: 14px 20px;
+    padding: 12px 18px;
   }
   .hero__service-btn__tag { display: none; }
   .hero__pill { display: none; }
   .hero__scroll { display: none; }
 
   /* ── Works 가로 스크롤 ── */
-  /* works-section은 overflow 건드리지 않음 */
   .works-hscroll {
     overflow-x: auto !important;
     overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
     padding: 0 20px;
-    /* GSAP pin이 만드는 height 초기화 */
     height: auto !important;
   }
   .works-track {
     display: flex;
-    /* GSAP x transform 완전 무력화 */
     transform: none !important;
     will-change: auto;
   }
@@ -785,7 +775,6 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     position: relative !important;
     top: auto !important;
     margin-top: 12px;
-    /* GSAP scale 초기화 */
     transform: none !important;
   }
   .service-card:first-child { margin-top: 0; }
@@ -802,8 +791,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 }
 
 @media (max-width: 480px) {
-  .nav__center { gap: 16px; }
-  .nav__link { font-size: 14px; }
+  .nav__center { gap: 12px; }
+  .nav__link { font-size: 12px; }
   .ticker__inner span { font-size: 14px; }
   .footer__ticker-inner span, .footer__ticker-inner a { font-size: 18px; }
 }
