@@ -124,6 +124,9 @@
     wordInterval = setInterval(cycleWord, 320);
   }
 
+  /* nav를 프리로더 동안 숨김 */
+  gsap.set('#nav', { opacity: 0, y: -20 });
+
   const counter = { val: 0 };
   gsap.timeline({
     onComplete() {
