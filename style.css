@@ -753,7 +753,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .nav__link { font-size: 14px; color: rgba(254,254,254,.95); }
   .nav__cta { display: none; }
 
-  /* 모바일 드롭다운 — 전체 너비, 진한 배경 */
+  /* 모바일 드롭다운 — 전체 너비, 흰 글로시 */
   .nav__submenu {
     position: fixed;
     top: 70px;
@@ -761,18 +761,21 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
     width: 100%;
     border-radius: 0;
     border-left: none; border-right: none; border-top: none;
-    border-bottom: 1px solid rgba(200,207,255,.15);
-    background: rgba(8,8,16,.95);
-    backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(254,254,254,.2);
+    background: rgba(254,254,254,.25);
+    backdrop-filter: blur(24px) saturate(200%);
+    -webkit-backdrop-filter: blur(24px) saturate(200%);
     padding: 12px 0 16px;
     min-width: unset;
     transform: none;
-    left: 0;
   }
   .nav__sub-link {
     font-size: 15px;
     padding: 12px 28px;
-    color: rgba(254,254,254,.85);
+    color: rgba(254,254,254,.9);
+  }
+  .nav__sub-link:hover {
+    background: rgba(254,254,254,.15);
   }
 
   /* ── Hero ── */
