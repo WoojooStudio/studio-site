@@ -85,6 +85,7 @@
     { text: 'Woojoo',  font: "'Rock 3D', cursive",                    style: 'normal', weight: 400 },
     { text: '우주',     font: "'Black Han Sans', sans-serif",           style: 'normal', weight: 400 },
     { text: 'Woojoo',  font: "'Sunshiney', cursive",                  style: 'normal', weight: 400 },
+    { text: 'Woojoo',  font: "'Bitcount Prop Double', monospace",      style: 'normal', weight: 400 },
     { text: 'Woojoo',  font: "'Space Mono', monospace",               style: 'normal', weight: 400 },
   ];
 
