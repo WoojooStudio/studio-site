@@ -837,3 +837,121 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .ticker__inner span { font-size: 14px; }
   .footer__ticker-inner span, .footer__ticker-inner a { font-size: 18px; }
 }
+
+/* ══════════════════════════════════
+   SPIRAL WORKS GALLERY
+══════════════════════════════════ */
+.spiral-scene {
+  width: 100%;
+  height: 620px;
+  perspective: 1100px;
+  overflow: hidden;
+  position: relative;
+  cursor: grab;
+}
+.spiral-scene:active { cursor: grabbing; }
+
+.spiral-track {
+  width: 100%; height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.spiral-card {
+  position: absolute;
+  width: clamp(240px, 28vw, 440px);
+  aspect-ratio: 16 / 9;
+  top: 50%; left: 50%;
+  will-change: transform, opacity;
+  outline: none;
+}
+
+.spiral-card__inner {
+  width: 100%; height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--dark) 0%, #0d0d1a 100%);
+  transition: box-shadow .3s;
+  position: relative;
+}
+
+.spiral-card:hover .spiral-card__inner,
+.spiral-card:focus-visible .spiral-card__inner {
+  box-shadow: 0 24px 64px rgba(61,97,207,.5);
+}
+
+.spiral-card:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
+
+.spiral-card img {
+  width: 100%; height: 100%;
+  object-fit: cover; display: block;
+}
+
+.spiral-card__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.78) 0%, rgba(0,0,0,.1) 55%, transparent 100%);
+  padding: 16px;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  opacity: 0; transition: opacity .25s;
+}
+
+.spiral-card:hover .spiral-card__overlay,
+.spiral-card:focus-visible .spiral-card__overlay { opacity: 1; }
+
+.spiral-card__num {
+  font-size: 10px; letter-spacing: .14em;
+  color: var(--lavender); margin-bottom: 4px;
+  font-family: 'Space Mono', monospace;
+}
+.spiral-card__title {
+  font-size: clamp(13px, 1.3vw, 18px);
+  font-weight: 700; color: #fff; line-height: 1.2;
+  font-family: 'Space Mono', monospace;
+}
+.spiral-card__tags {
+  font-size: 10px; color: rgba(255,255,255,.55);
+  margin-top: 5px; font-family: 'Space Mono', monospace;
+  letter-spacing: .04em;
+}
+
+.spiral-card__coming {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 9px; letter-spacing: .1em;
+  color: var(--lavender); text-transform: uppercase;
+  background: rgba(0,0,0,.55);
+  padding: 3px 8px; border-radius: 100px;
+  font-family: 'Space Mono', monospace;
+}
+
+/* ── 폴백 그리드 (모바일 / reduced-motion) ── */
+.spiral-fallback {
+  display: none;
+  flex-wrap: wrap; gap: 16px;
+  padding: 0 20px 40px;
+}
+.spiral-fallback .spiral-card {
+  position: static;
+  width: calc(50% - 8px);
+  transform: none !important;
+  opacity: 1 !important;
+  aspect-ratio: 16 / 9;
+}
+.spiral-fallback .spiral-card__overlay { opacity: 1; }
+
+@media (max-width: 480px) {
+  .spiral-fallback .spiral-card { width: 100%; }
+}
+
+@media (max-width: 768px) {
+  .spiral-scene { display: none; }
+  .spiral-fallback { display: flex; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spiral-scene { display: none; }
+  .spiral-fallback { display: flex; }
+}

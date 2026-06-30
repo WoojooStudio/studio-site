@@ -343,39 +343,183 @@
   }
 
   /* ══════════════════════════════════
-     WORKS — horizontal scroll
+     SPIRAL WORKS GALLERY
   ══════════════════════════════════ */
-  function initWorks() {
-    const track = document.getElementById('works-track');
-    if (!track) return;
+  const SPIRAL_CFG = {
+    TURNS:      2.5,
+    Z_BACK:    -1400,
+    Z_FRONT:    480,
+    R_BACK:     60,
+    R_FRONT:    320,
+    EASE:       1.5,
+    AUTO_SPEED: 0.025,
+    DENSITY:    3,
+    TILT_X:     12,   // 나선 전체 X축 기울기(deg)
+    TILT_Y:     18,   // Y축 기울기(deg) — 대각선 효과
+    HOVER_Z:    140,
+  };
 
+  const WORKS_DATA = [
+    { no:'001', title:'Lykon',            tags:'Campaign · Social Media · CRM',          url:'works/grana/index.html',    img:'assets/images/work-grana.png'    },
+    { no:'002', title:'Ngo Kim Pak',      tags:'Brand Identity · Interior · Neon Signs', url:'works/gold-idol/index.html', img:'assets/images/work-gold-idol.png'},
+    { no:'003', title:'Soap Soop',        tags:'Brand · Web · Packaging',                url:'works/toppers/index.html',   img:'assets/images/work-toppers.png'  },
+    { no:'004', title:'Korea Town Berlin',tags:'Community · Events · Art Direction',     url:'works/campana/index.html',   img:'assets/images/work-campana.png'  },
+    { no:'005', title:'TIER Mobility',    tags:'',                                        url:'',                           img:''                                },
+    { no:'006', title:'Soopoolim',        tags:'',                                        url:'',                           img:''                                },
+    { no:'007', title:'Chicken Coma',     tags:'',                                        url:'',                           img:''                                },
+    { no:'008', title:'Eating Fantasy',   tags:'',                                        url:'',                           img:''                                },
+  ];
+
+  function initWorks() {
+    const scene    = document.getElementById('spiral-scene');
+    const track    = document.getElementById('spiral-track');
+    const fallback = document.getElementById('spiral-fallback');
+    if (!scene || !track || !fallback) return;
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isMobile = window.innerWidth <= 768;
 
-    if (isMobile) {
-      /* 모바일: GSAP 완전 건드리지 않음 — CSS 네이티브 스냅 스크롤만 사용 */
-      gsap.set(track, { clearProps: 'all' });
+    /* ── 카드 DOM 생성 (공통) ── */
+    function makeCard(w) {
+      const isLink = !!w.url;
+      const el = document.createElement(isLink ? 'a' : 'div');
+      el.className = 'spiral-card';
+      if (isLink) {
+        el.href = w.url;
+        el.setAttribute('data-cursor', 'view');
+      } else {
+        el.setAttribute('aria-disabled', 'true');
+        el.setAttribute('tabindex', '-1');
+      }
+
+      const inner = document.createElement('div');
+      inner.className = 'spiral-card__inner';
+
+      if (w.img) {
+        const img = document.createElement('img');
+        img.src = w.img; img.alt = w.title; img.loading = 'lazy';
+        inner.appendChild(img);
+      }
+
+      const overlay = document.createElement('div');
+      overlay.className = 'spiral-card__overlay';
+      overlay.innerHTML = `
+        <span class="spiral-card__num">(${w.no})</span>
+        <span class="spiral-card__title">${w.title}</span>
+        ${w.tags ? `<span class="spiral-card__tags">${w.tags}</span>` : ''}
+      `;
+      inner.appendChild(overlay);
+
+      if (!isLink) {
+        const cs = document.createElement('span');
+        cs.className = 'spiral-card__coming';
+        cs.textContent = 'Coming soon';
+        inner.appendChild(cs);
+      }
+
+      el.appendChild(inner);
+      return el;
+    }
+
+    /* ── 폴백 (모바일 / reduced-motion) ── */
+    if (prefersReduced || isMobile) {
+      WORKS_DATA.forEach(w => fallback.appendChild(makeCard(w)));
       return;
     }
 
-    track.querySelectorAll('.work-card').forEach((card, i) => {
-      gsap.from(card, {
-        y: 70, opacity: 0, duration: 0.8, delay: i * 0.08,
-        ease: 'power3.out',
-        scrollTrigger: { trigger: card, start: 'top 92%', once: true },
-      });
+    /* ── 스파이럴 카드 풀 생성 ── */
+    const total = WORKS_DATA.length * SPIRAL_CFG.DENSITY;
+    const cards = [];
+    for (let i = 0; i < total; i++) {
+      const w = WORKS_DATA[i % WORKS_DATA.length];
+      const el = makeCard(w);
+      track.appendChild(el);
+      cards.push({ el, w });
+    }
+
+    /* ── rAF 루프 ── */
+    let progress = 0;
+    let lastTime = null;
+    let rafId = null;
+    let hoveredIdx = -1;
+    let autoSpeed = SPIRAL_CFG.AUTO_SPEED;
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+    function fract(x) { return x - Math.floor(x); }
+    function easeP(t) { return Math.pow(t, SPIRAL_CFG.EASE); }
+
+    function frame(ts) {
+      if (!lastTime) lastTime = ts;
+      const dt = Math.min((ts - lastTime) / 1000, 0.05);
+      lastTime = ts;
+
+      /* hover 시 자동재생 감속 */
+      const targetSpeed = hoveredIdx >= 0 ? 0.002 : SPIRAL_CFG.AUTO_SPEED;
+      autoSpeed += (targetSpeed - autoSpeed) * 0.08;
+      progress = fract(progress + autoSpeed * dt);
+
+      const cfg = SPIRAL_CFG;
+      const TAU = Math.PI * 2;
+
+      for (let i = 0; i < total; i++) {
+        const p = fract(i / total + progress);
+        const angle = p * cfg.TURNS * TAU;
+        const ep    = easeP(p);
+        const z     = lerp(cfg.Z_BACK, cfg.Z_FRONT, ep);
+        const r     = lerp(cfg.R_BACK, cfg.R_FRONT, p);
+        const x     = Math.cos(angle) * r;
+        const y     = Math.sin(angle) * r * 0.55;  // 타원형 — 세로 좁게
+
+        /* 루프 이음새 페이드 */
+        let op = 1;
+        if      (p < 0.06)  op = p / 0.06;
+        else if (p > 0.92)  op = (1 - p) / 0.08;
+
+        /* hover 부스트 */
+        const zFinal = i === hoveredIdx ? z + cfg.HOVER_Z : z;
+        const zi = i === hoveredIdx ? 9999 : Math.max(0, Math.round((z - cfg.Z_BACK) / 10));
+
+        const el = cards[i].el;
+        el.style.transform = `translate3d(calc(${x}px - 50%), calc(${y}px - 50%), ${zFinal}px) rotateX(${cfg.TILT_X}deg) rotateY(${cfg.TILT_Y}deg)`;
+        el.style.opacity   = op;
+        el.style.zIndex    = zi;
+      }
+
+      rafId = requestAnimationFrame(frame);
+    }
+
+    /* ── 탭 비활성 시 정지 ── */
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) { cancelAnimationFrame(rafId); lastTime = null; }
+      else rafId = requestAnimationFrame(frame);
     });
 
-    const getAmt = () => -(track.scrollWidth - window.innerWidth + 40);
-    gsap.to(track, {
-      x: getAmt, ease: 'none',
-      scrollTrigger: {
-        trigger: '.works-hscroll',
-        start: 'top top',
-        end: () => `+=${Math.abs(getAmt())}`,
-        pin: true, scrub: 1,
-        invalidateOnRefresh: true,
-      },
+    /* ── 휠 스크럽 ── */
+    scene.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      progress = fract(progress + e.deltaY * 0.0003);
+    }, { passive: false });
+
+    /* ── 드래그 스크럽 ── */
+    let dragX = null;
+    scene.addEventListener('pointerdown', (e) => { dragX = e.clientX; });
+    window.addEventListener('pointermove', (e) => {
+      if (dragX === null) return;
+      const dx = e.clientX - dragX;
+      progress = fract(progress - dx * 0.0008);
+      dragX = e.clientX;
     });
+    window.addEventListener('pointerup', () => { dragX = null; });
+
+    /* ── hover / focus ── */
+    cards.forEach(({ el }, i) => {
+      el.addEventListener('mouseenter', () => { hoveredIdx = i; });
+      el.addEventListener('mouseleave', () => { hoveredIdx = -1; });
+      el.addEventListener('focusin',    () => { hoveredIdx = i; });
+      el.addEventListener('focusout',   () => { hoveredIdx = -1; });
+    });
+
+    rafId = requestAnimationFrame(frame);
   }
 
   /* ══════════════════════════════════
